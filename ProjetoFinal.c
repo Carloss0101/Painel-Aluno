@@ -4,7 +4,6 @@
 #include <ctype.h>
 #include <time.h>
 
-
 typedef struct {
     int dia;
     int mes;
@@ -42,44 +41,44 @@ typedef struct {
 } td_compromisso;
 
 //Funções de menu
-int apresentar_menu(); //Feito
-void apresentar_menu_imprimir(td_compromisso [], int); //Feito
+int apresentar_menu(); 
+void apresentar_menu_imprimir(td_compromisso [], int);
 
 //Funções de cadastros
-void cadastrar_aluno(td_aluno [], int*); //Feito
-void cadastra_disciplina(td_disciplinas [], int*); //Feito
-void cadastra_matricula(td_matricula [], int*, td_aluno[], int, td_disciplinas[], int); //Feito
-void cadastra_compromisso(td_compromisso [], int*, td_aluno [], int); //Feito
+void cadastrar_aluno(td_aluno [], int*); 
+void cadastra_disciplina(td_disciplinas [], int*); 
+void cadastra_matricula(td_matricula [], int*, td_aluno[], int, td_disciplinas[], int); 
+void cadastra_compromisso(td_compromisso [], int*, td_aluno [], int); 
 
 //Funções de impressão
-void imprime_aluno(td_aluno [], int*); //Feito
-void imprime_vetor_alunos(td_aluno [], int*); //Feito
-void imprime_compromissos_um_aluno(td_compromisso[], int); //Feito
-void imprime_compromissos_todos_alunos(td_compromisso[], int); //Feito
-void imprime_compromissos_uma_data(td_compromisso[], int); //Feito
-void imprime_compromissos_todas_datas(td_compromisso[], int); //Feito
+void imprime_aluno(td_aluno [], int*); 
+void imprime_vetor_alunos(td_aluno [], int*); 
+void imprime_compromissos_um_aluno(td_compromisso[], int); 
+void imprime_compromissos_todos_alunos(td_compromisso[], int); 
+void imprime_compromissos_uma_data(td_compromisso[], int); 
+void imprime_compromissos_todas_datas(td_compromisso[], int); 
 
 //Funções de verificação
-int verifica_data(td_data []); //Feito
-int verifica_horario(td_hora []); //Feito
-int verifica_email(char []); //Feito
+int verifica_data(td_data []); 
+int verifica_horario(td_hora []); 
+int verifica_email(char []); 
 
 //Funções de busca
-int encontra_aluno(td_aluno [], int, int); //Feito
-int encontra_disciplina(td_disciplinas [], int, int); //Feito
-int procura_data(td_compromisso [], int, td_data *, int); //Feito
-int procura_horario(td_compromisso [], int, td_data [], td_hora [], int); //Feito
+int encontra_aluno(td_aluno [], int, int); 
+int encontra_disciplina(td_disciplinas [], int, int); 
+int procura_data(td_compromisso [], int, td_data *, int); 
+int procura_horario(td_compromisso [], int, td_data [], td_hora [], int); 
 
 //Funções de comparação (qsort)
-int compara_aluno_ra(const void *, const void *); //Feito
-int compara_data_hora(const void *, const void *); //Feito
-int compara_ra_data_hora(const void *, const void *); //Feito
-int compara_hora_ra(const void *, const void *); // Feito
-int compara_data_hora_ra(const void *, const void *); //Feito
+int compara_aluno_ra(const void *, const void *); 
+int compara_data_hora(const void *, const void *); 
+int compara_ra_data_hora(const void *, const void *); 
+int compara_hora_ra(const void *, const void *); 
+int compara_data_hora_ra(const void *, const void *); 
 
 //Funções de memoria
-void* aloca_vetor(int, size_t); //Feito
-void* realoca_vetor(void*, int, size_t); //Feito
+void* aloca_vetor(int, size_t); 
+void* realoca_vetor(void*, int, size_t); 
 
 int main() {
     td_aluno* alunos;
@@ -101,6 +100,7 @@ int main() {
 	int cap_compromissos = 10;
 	int qtd_compromissos = 0;
 	
+	//Locação inicial dos vetores
 	alunos = aloca_vetor(cap_alunos, sizeof(td_aluno));
 	disciplinas = aloca_vetor(cap_disciplinas, sizeof(td_disciplinas));
 	matriculas = aloca_vetor(cap_matriculas, sizeof(td_matricula));
@@ -114,8 +114,9 @@ int main() {
 		switch(menu)
 		{
 		case 1:
-			system("cls");
-			if(qtd_alunos == cap_alunos) {
+			system("cls"); //Limpa o terminal
+			//Se a quantidade do vetor for iqual a sua capacidade, ele realoca uma nova quantidade para o vetor.
+			if(qtd_alunos == cap_alunos) { 
 				cap_alunos += 10;
 				alunos = realoca_vetor(alunos, cap_alunos, sizeof(td_aluno));
 			}
@@ -140,7 +141,7 @@ int main() {
 		case 4:
 			system("cls");
 			if(qtd_compromissos == cap_compromissos) {
-				cap_compromissos += 10;
+				cap_compromissos += 5;
 				compromissos = realoca_vetor(compromissos, cap_compromissos, sizeof(td_compromisso));
 			}
 			cadastra_compromisso(compromissos, &qtd_compromissos, alunos, qtd_alunos);
@@ -170,7 +171,8 @@ int main() {
 	return 0;
 }
 
-//Funções de menu
+//===============Funções de menu===============
+
 int apresentar_menu() {
 	int menu;
 	printf("------------------------------");
@@ -231,6 +233,7 @@ void apresentar_menu_imprimir(td_compromisso *compromissos, int qtd_compromissos
 	}while(menu != 8);
 }
 
+//===============Funções de cadastros===============
 
 void cadastrar_aluno(td_aluno alunos[], int* qtd_alunos) {
 	int ra, menu;
@@ -270,14 +273,14 @@ void cadastrar_aluno(td_aluno alunos[], int* qtd_alunos) {
 			break; 
 		} else {
 			printf("\nEmail Invalido");
-        	
+  	      
 			printf("\nPressione 1 para repetir ou outra tecla para voltar\n");
         	scanf("%d", &menu);
         
 			if(menu != 1) {
             	return;
         	}
-        	getchar(); 
+  	      getchar(); 
 		} 
 	}while(1);
 	
@@ -302,19 +305,16 @@ void cadastra_disciplina(td_disciplinas disciplinas[], int* qtd_disciplinas) {
 		
 		//Verifica se a disciplina já existe
 		if (validacao != -1) {
-			printf("\nDisciplina encontrada: %s\n", disciplinas[validacao].disciplina);
-			break;
-		
-   		 } else {
-  			printf("\nDisciplina nao encontrada!");
+			printf("\nDisciplina ja existente: %s\n", disciplinas[validacao].disciplina);
 			
-			printf("\nDigite 1 para tentar novamente ou qualquer outro número para voltar ao menu: ");
+			printf("\nDigite 1 para tentar novamente ou qualquer outro numero para voltar ao menu: ");
 			scanf("%d", &menu);
 			
 			if (menu != 1) {
        	    		return;
-  	 	 	 	 }
-    	 }
+	 	 	 }
+   		 } else
+			break; //Sai do loop
 	} while (1);
 
 	
@@ -359,13 +359,14 @@ void cadastra_matricula(td_matricula matriculas[], int* qtd_matriculas, td_aluno
 		
 		verificarDisciplina = encontra_disciplina(disciplinas, qtd_disciplinas, codigoDisciplina);
 		
+		//Verifica se a disciplina existe
 		if(verificarDisciplina != -1) {
 			printf("Disciplina: %s", disciplinas[verificarDisciplina].disciplina);
 			break;
 		}else {
 			printf("\nDisciplina nao encontrado!");
 			
-			printf("\nDigite 1 para tentar novamente ou qualquer outro número para voltar ao menu: ");
+			printf("\nDigite 1 para tentar novamente ou qualquer outro numero para voltar ao menu: ");
 			scanf("%d", &menu);
 			if(menu != 1) {
 				return;
@@ -379,13 +380,14 @@ void cadastra_matricula(td_matricula matriculas[], int* qtd_matriculas, td_aluno
     	scanf("%f", &matriculas[*qtd_matriculas].notas[i]);
 	}
 	time_t t = time(NULL);
-	struct tm *dataAtual = localtime(&t);
+	struct tm *dataAtual = localtime(&t); //Pega a data em que a matricula foi efetuada
 	
 	matriculas[*qtd_matriculas].ra = ra;
 	matriculas[*qtd_matriculas].codigo_dis = codigoDisciplina;
-	matriculas[*qtd_matriculas].data_matricula.dia = dataAtual->tm_mday;
-	matriculas[*qtd_matriculas].data_matricula.mes = dataAtual->tm_mon + 1;
-	matriculas[*qtd_matriculas].data_matricula.ano = dataAtual->tm_year + 1900;
+	matriculas[*qtd_matriculas].data_matricula.dia = dataAtual->tm_mday; //Dia atual
+	matriculas[*qtd_matriculas].data_matricula.mes = dataAtual->tm_mon + 1; //Mes atual
+	matriculas[*qtd_matriculas].data_matricula.ano = dataAtual->tm_year + 1900; //Ano atual
+	
 	(*qtd_matriculas)++;
 }
 
@@ -393,8 +395,6 @@ void cadastra_compromisso(td_compromisso *compromisso, int* qtd_compromissos, td
 	int ra, menu=0;
 	int verificarRa;
 	
-	
-	//Falta verificar se tem 2 compromissos na mesma data
 	td_data data;
 	td_hora hora;
 	
@@ -404,6 +404,7 @@ void cadastra_compromisso(td_compromisso *compromisso, int* qtd_compromissos, td
 		
 		verificarRa = encontra_aluno(alunos, qtd_alunos, ra);
 		
+		//Verifica se o aluno existe
 		if(verificarRa != -1) {
 			printf("Aluno: %s \n", alunos[verificarRa].nome);
 			break;	
@@ -424,7 +425,8 @@ void cadastra_compromisso(td_compromisso *compromisso, int* qtd_compromissos, td
 	do {
     	printf("\nDigite a data do compromisso (DD/MM/AAAA): ");
     	scanf("%d/%d/%d", &data.dia, &data.mes, &data.ano);
-
+		
+		//Verifica se a data está correta e se a data é futura a data atual
    		 if (!verifica_data(&data)) {
    		     printf("\nData invalida!");
     	} else if (!procura_data(compromisso, *qtd_compromissos, &data, ra)) {
@@ -447,6 +449,7 @@ void cadastra_compromisso(td_compromisso *compromisso, int* qtd_compromissos, td
 		printf("\nDigite o horario do compromisso (HH:MM): ");
  	   	scanf("%d:%d", &hora.hora, &hora.min);
     
+    	//Verifica o horario	
     	if (!verifica_horario(&hora)) {
     		printf("Hora invalida!");
         	} else if(!procura_horario(compromisso, *qtd_compromissos, &data, &hora, ra)){
@@ -476,6 +479,194 @@ void cadastra_compromisso(td_compromisso *compromisso, int* qtd_compromissos, td
 	
 	(*qtd_compromissos)++;
 }
+
+//===============Funções de impressão===============
+
+void imprime_aluno(td_aluno *alunos, int* qtd_alunos) {
+    int ra, verificador, menu;
+
+    do {
+        printf("Digite o R.A do aluno: ");
+        scanf("%d", &ra);
+		
+		//Procura pelo cadastro do aluno, retorna a posicao do aluno no array
+        verificador = encontra_aluno(alunos, *qtd_alunos, ra);
+        if (verificador != -1) {
+            printf("\nNome: %s", alunos[verificador].nome);
+            printf("\nRA: %d", alunos[verificador].ra);
+            printf("\nEmail: %s", alunos[verificador].email);
+        } else {
+            printf("\nAluno nao encontrado!");
+        }
+
+        printf("\nDigite 1 para imprimir outro RA ou qualquer outro numero para voltar ao menu: ");
+        scanf("%d", &menu);
+
+    } while (menu == 1);
+}
+
+void imprime_vetor_alunos(td_aluno *alunos, int *qtd_alunos) {
+	int i, menu;
+	
+	//Verifica se tem alunos cadastrados
+    if(*qtd_alunos == 0) {
+		printf("Nenhum aluno cadastrado!");
+	} else {
+    
+		// Ordena os alunos por RA
+		qsort(alunos, *qtd_alunos, sizeof(td_aluno), compara_aluno_ra);
+		
+    	printf("\nLista de Alunos (ordenada por RA):\n");
+    	for (i = 0; i < *qtd_alunos; i++) {
+        	printf("\nRA: %d", alunos[i].ra);
+        	printf("\nNome: %s", alunos[i].nome);
+        	printf("\nEmail: %s\n", alunos[i].email);
+    	}
+	}
+    printf("\n\nDigite qualquer numero para voltar ao menu: ");
+    scanf("%d", &menu);
+}
+
+void imprime_compromissos_um_aluno(td_compromisso *compromissos, int qtd_compromissos) {
+    int ra, i, count = 0, j=0, menu;
+    
+	printf("Digite o RA do aluno: ");
+    scanf("%d", &ra);
+
+    //Contar quantos compromissos o aluno tem
+    for (i = 0; i < qtd_compromissos; i++) {
+        if (compromissos[i].aluno.ra == ra) {
+            count++;
+        }
+    }
+
+    if (count > 0) {
+ 	   //Criar vetor temporário com os compromissos desse aluno
+    	td_compromisso *filtrados = malloc(count * sizeof(td_compromisso));
+    	for (i = 0; i < qtd_compromissos; i++) {
+        	if (compromissos[i].aluno.ra == ra) {
+            	filtrados[j++] = compromissos[i];
+ 	 	 }
+    	}
+
+    	//Ordenar por data e hora
+    	qsort(filtrados, count, sizeof(td_compromisso), compara_data_hora);
+
+    	//Imprimir
+    	printf("\nCompromissos do aluno %s (RA: %d):\n", filtrados[0].aluno.nome, ra);
+    	for (i = 0; i < count; i++) {
+        	printf("\nData: %02i/%02i/%04i\n", filtrados[i].data.dia, filtrados[i].data.mes, filtrados[i].data.ano);
+        	printf("Horario: %02i:%02i\n", filtrados[i].horario.hora, filtrados[i].horario.min);
+        	printf("Descricao: %s\n", filtrados[i].descricao);
+    	}
+    	
+    	free(filtrados); //Libera a memoria
+    } else {
+		   printf("\nNenhum compromisso encontrado para esse aluno.\n");	
+	}
+	
+	
+	printf("\n\nDigite qualquer numero para voltar ao menu: ");
+    scanf("%d", &menu);
+    
+}
+
+void imprime_compromissos_todos_alunos(td_compromisso *compromissos, int qtd_compromissos) {
+    int i, menu;
+	
+	//Verifica se tem compromissos cadastrados
+    if (qtd_compromissos == 0) {
+        printf("Nenhum compromisso cadastrado.\n");
+    } else {
+        //Ordenar todos os compromissos por RA, data e hora
+        qsort(compromissos, qtd_compromissos, sizeof(td_compromisso), compara_ra_data_hora);
+
+        printf("\nCompromissos de todos os alunos:\n");
+
+        for (i = 0; i < qtd_compromissos; i++) {
+            printf("\nAluno: %s (RA: %d)\n", compromissos[i].aluno.nome, compromissos[i].aluno.ra);
+            printf("Data: %02i/%02i/%04i\n", compromissos[i].data.dia, compromissos[i].data.mes, compromissos[i].data.ano);
+            printf("Horario: %02i:%02i\n", compromissos[i].horario.hora, compromissos[i].horario.min);
+            printf("Descricao: %s\n", compromissos[i].descricao);
+        }
+    }
+
+    printf("\n\nDigite qualquer numero para voltar ao menu: ");
+    scanf(" %d", &menu);
+}
+
+void imprime_compromissos_uma_data(td_compromisso *compromissos, int qtd_compromissos) {
+    td_data data;
+    int menu, count = 0, i, j = 0;
+
+    printf("\nDigite a data (DD/MM/AAAA): ");
+	scanf("%d/%d/%d", &data.dia, &data.mes, &data.ano);
+
+    //Conta quantos compromissos tem na data
+    for (i = 0; i < qtd_compromissos; i++) {
+        if (compromissos[i].data.dia == data.dia &&
+            compromissos[i].data.mes == data.mes &&
+            compromissos[i].data.ano == data.ano) {
+            count++;
+        }
+    }
+
+    if (count == 0) {
+        printf("\nData invalida ou sem compromissos\n");
+    } else {
+        td_compromisso *filtrados = malloc(count * sizeof(td_compromisso));
+
+        for (i = 0; i < qtd_compromissos; i++) {
+            if (compromissos[i].data.dia == data.dia &&
+                compromissos[i].data.mes == data.mes &&
+                compromissos[i].data.ano == data.ano) {
+                filtrados[j++] = compromissos[i];
+            }
+        }
+
+        // Ordena por hora e RA
+        qsort(filtrados, count, sizeof(td_compromisso), compara_hora_ra);
+
+        printf("\nCompromissos do dia %02d/%02d/%04d:\n", data.dia, data.mes, data.ano);
+        
+        for (i = 0; i < count; i++) {
+            printf("\nAluno: %s (RA: %d)", filtrados[i].aluno.nome, filtrados[i].aluno.ra);
+            printf("\nHorario: %02i:%02i", filtrados[i].horario.hora, filtrados[i].horario.min);
+            printf("\nDescricao: %s\n", filtrados[i].descricao);
+        }
+
+        free(filtrados); //Libera a memoria
+    }
+
+    printf("\nDigite qualquer numero para voltar ao menu: ");
+    scanf("%d", &menu); //Volta para o menu
+}
+
+void imprime_compromissos_todas_datas(td_compromisso *compromissos, int qtd_compromissos) {
+    int i, menu;
+    
+    if (qtd_compromissos == 0) {
+        printf("\nNenhum compromisso cadastrado.\n");
+    } else {
+        // Ordenar por data, hora, RA
+        qsort(compromissos, qtd_compromissos, sizeof(td_compromisso), compara_data_hora_ra);
+
+        printf("\nCompromissos ordenados por data, hora e RA:\n");
+
+		//imprimi os vetores
+        for (i = 0; i < qtd_compromissos; i++) {
+        	printf("\nAluno: %s (RA: %d)\n", compromissos[i].aluno.nome, compromissos[i].aluno.ra);
+            printf("Data: %02d/%02d/%04d\n", compromissos[i].data.dia, compromissos[i].data.mes, compromissos[i].data.ano);
+            printf("Horario: %02d:%02d\n", compromissos[i].horario.hora, compromissos[i].horario.min);
+            printf("Descrição: %s\n", compromissos[i].descricao);
+        }
+    }
+
+    printf("\n\nDigite qualquer numero para voltar ao menu: ");
+    scanf("%d", &menu); //volta para o menu.
+}
+
+//===============Funções de verificação===============
 
 int verifica_email(char email[]) {
     int arroba_cont = 0;
@@ -509,21 +700,6 @@ int verifica_email(char email[]) {
     }
     return 0;
 }
-
-
-int verifica_horario(td_hora *hora) {
-    if (hora->hora < 0 || hora->hora > 23) {
-		return 0; //Hora inválida   	
-	}
-
-    if (hora->min < 0 || hora->min > 59) {
-        return 0; //Minuto inválido
-	}
-    
-	return 1; // Horario válido
-}
-	
-
 
 int verifica_data(td_data *data) {
 	int dd = data->dia;
@@ -570,6 +746,19 @@ int verifica_data(td_data *data) {
     }
 }
 
+int verifica_horario(td_hora *hora) {
+    if (hora->hora < 0 || hora->hora > 23) {
+		return 0; //Hora inválida   	
+	}
+
+    if (hora->min < 0 || hora->min > 59) {
+        return 0; //Minuto inválido
+	}
+    
+	return 1; // Horario válido
+}
+
+//===============Funções de busca===============
 
 int encontra_aluno(td_aluno *alunos, int tamanhoVetor, int ra) {
     int i;
@@ -593,28 +782,28 @@ int encontra_disciplina(td_disciplinas *disciplinas, int tamanhoVetor, int codig
     return -1;
 }
 
-
-void imprime_aluno(td_aluno *alunos, int* qtd_alunos) {
-    int ra, verificador, menu;
-
-    do {
-        printf("Digite o R.A do aluno: ");
-        scanf("%d", &ra);
-
-        verificador = encontra_aluno(alunos, *qtd_alunos, ra);
-        if (verificador != -1) {
-            printf("\nNome: %s", alunos[verificador].nome);
-            printf("RA: %d", alunos[verificador].ra);
-            printf("\nEmail: %s", alunos[verificador].email);
-        } else {
-            printf("\nAluno nao encontrado!");
+int procura_data(td_compromisso *compromissos, int tamanho, td_data *data, int ra) {
+    int contador = 0, i;
+    for (i = 0; i < tamanho; i++) {
+        if (compromissos[i].aluno.ra == ra && compromissos[i].data.dia == data->dia && compromissos[i].data.mes == data->mes && compromissos[i].data.ano == data->ano) {
+            contador++;
         }
-
-        printf("\nDigite 1 para imprimir outro RA ou qualquer outro numero para voltar ao menu: ");
-        scanf("%d", &menu);
-
-    } while (menu == 1);
+    }
+    return (contador < 2); //retorna 1 se contador for menor que 2, caso contrario retorna 0.
 }
+
+int procura_horario(td_compromisso *compromissos, int tamanho, td_data *data, td_hora *horario, int ra) {
+    int i;
+	for (i = 0; i < tamanho; i++) {
+        if (compromissos[i].aluno.ra == ra && compromissos[i].data.dia == data->dia && compromissos[i].data.mes == data->mes &&
+            compromissos[i].data.ano == data->ano && compromissos[i].horario.hora == horario->hora && compromissos[i].horario.min == horario->min) {
+            return 0; //Ja tem compromisso no mesmo horario
+        }
+    }
+    return 1; //Horario valido
+}
+
+//===============Funções de comparação (qsort)===============
 
 int compara_aluno_ra(const void *a, const void *b) {
     td_aluno *aluno1 = (td_aluno *)a;
@@ -623,165 +812,40 @@ int compara_aluno_ra(const void *a, const void *b) {
     return aluno1->ra - aluno2->ra;
 }
 
-
-void imprime_vetor_alunos(td_aluno *alunos, int *qtd_alunos) {
-
-	int i, menu;
-    if(*qtd_alunos == 0) {
-		printf("Nenhum aluno cadastrado!");
-	} else {
-    
-		// Ordena os alunos por RA
-		qsort(alunos, *qtd_alunos, sizeof(td_aluno), compara_aluno_ra);
-
-    	printf("\nLista de Alunos (ordenada por RA):\n");
-    	for (i = 0; i < *qtd_alunos; i++) {
-        	printf("\nRA: %d", alunos[i].ra);
-        	printf("\nNome: %s", alunos[i].nome);
-        	printf("\nEmail: %s\n", alunos[i].email);
-    	}
-	}
-    printf("\n\nDigite qualquer numero para voltar ao menu: ");
-    scanf("%d", &menu);
-}
-
-
-// Alocação inicial 
-void* aloca_vetor(int quantidade, size_t tamanho_tipo) {
-    return malloc(quantidade * tamanho_tipo);
-}
-
-// Realocação 
-void* realoca_vetor(void* vetor, int nova_quantidade, size_t tamanho_tipo) {
-    return realloc(vetor, nova_quantidade * tamanho_tipo);
-}
-
-
-int procura_data(td_compromisso *compromissos, int tamanho, td_data *data, int ra) {
-    int contador = 0, i;
-    for (i = 0; i < tamanho; i++) {
-        if (compromissos[i].aluno.ra == ra && compromissos[i].data.dia == data->dia && compromissos[i].data.mes == data->mes && compromissos[i].data.ano == data->ano) {
-            contador++;
-        }
-    }
-    return (contador < 2); // retorna 1 se contador for menor que 2, caso contrario retorna 0.
-}
-
-int procura_horario(td_compromisso *compromissos, int tamanho, td_data *data, td_hora *horario, int ra) {
-    int i;
-	for (i = 0; i < tamanho; i++) {
-        if (compromissos[i].aluno.ra == ra && compromissos[i].data.dia == data->dia && compromissos[i].data.mes == data->mes &&
-            compromissos[i].data.ano == data->ano && compromissos[i].horario.hora == horario->hora && compromissos[i].horario.min == horario->min) {
-            return 0; // Ja tem compromisso no mesmo horario
-        }
-    }
-    return 1; // Horario valido
-}
-
 int compara_data_hora(const void *a, const void *b) {
     td_compromisso *c1 = (td_compromisso *)a;
     td_compromisso *c2 = (td_compromisso *)b;
 
-    // Compara ano
+    //Compara ano
     if (c1->data.ano != c2->data.ano)
         return c1->data.ano - c2->data.ano;
 
-    // Compara mes
+    //Compara mes
     if (c1->data.mes != c2->data.mes)
         return c1->data.mes - c2->data.mes;
 
-    // Compara dia
+    //Compara dia
     if (c1->data.dia != c2->data.dia)
         return c1->data.dia - c2->data.dia;
 
-    // Compara hora
+    //Compara hora
     if (c1->horario.hora != c2->horario.hora)
         return c1->horario.hora - c2->horario.hora;
 
-    // Compara minutos
+    //Compara minutos
     return c1->horario.min - c2->horario.min;
-}
-
-
-
-void imprime_compromissos_um_aluno(td_compromisso *compromissos, int qtd_compromissos) {
-    int ra, i, count = 0, j=0, menu;
-    
-	printf("Digite o RA do aluno: ");
-    scanf("%d", &ra);
-
-    // Contar quantos compromissos o aluno tem
-    for (i = 0; i < qtd_compromissos; i++) {
-        if (compromissos[i].aluno.ra == ra) {
-            count++;
-        }
-    }
-
-    if (count > 0) {
- 	   // Criar vetor temporário com os compromissos desse aluno
-    	td_compromisso *filtrados = malloc(count * sizeof(td_compromisso));
-    	for (i = 0; i < qtd_compromissos; i++) {
-        	if (compromissos[i].aluno.ra == ra) {
-            	filtrados[j++] = compromissos[i];
- 	 	 }
-    	}
-
-    	// Ordenar por data e hora
-    	qsort(filtrados, count, sizeof(td_compromisso), compara_data_hora);
-
-    	// Imprimir
-    	printf("\nCompromissos do aluno %s (RA: %d):\n", filtrados[0].aluno.nome, ra);
-    	for (i = 0; i < count; i++) {
-        	printf("\nData: %02i/%02i/%04i\n", filtrados[i].data.dia, filtrados[i].data.mes, filtrados[i].data.ano);
-        	printf("Horario: %02i:%02i\n", filtrados[i].horario.hora, filtrados[i].horario.min);
-        	printf("Descricao: %s\n", filtrados[i].descricao);
-    	}
-    	
-    	free(filtrados); //Libera a memoria
-    } else {
-		   printf("\nNenhum compromisso encontrado para esse aluno.\n");	
-	}
-	
-	
-	printf("\n\nDigite qualquer numero para voltar ao menu: ");
-    scanf("%d", &menu);
-    
 }
 
 int compara_ra_data_hora(const void *a, const void *b) {
     td_compromisso *c1 = (td_compromisso *)a;
     td_compromisso *c2 = (td_compromisso *)b;
 
-    // Usa a função de RA que você já tem
+    //Usa a função de RA que você já tem
     int resultado_ra = compara_aluno_ra(&(c1->aluno), &(c2->aluno));
     if (resultado_ra != 0) return resultado_ra;
 
-    // Usa a função de data/hora que você já tem
+    //Usa a função de data/hora que você já tem
     return compara_data_hora(c1, c2);
-}
-
-
-void imprime_compromissos_todos_alunos(td_compromisso *compromissos, int qtd_compromissos) {
-    int i, menu;
-
-    if (qtd_compromissos == 0) {
-        printf("Nenhum compromisso cadastrado.\n");
-    } else {
-        // Ordenar todos os compromissos por RA, data e hora
-        qsort(compromissos, qtd_compromissos, sizeof(td_compromisso), compara_ra_data_hora);
-
-        printf("\nCompromissos de todos os alunos:\n");
-
-        for (i = 0; i < qtd_compromissos; i++) {
-            printf("\nAluno: %s (RA: %d)\n", compromissos[i].aluno.nome, compromissos[i].aluno.ra);
-            printf("Data: %02i/%02i/%04i\n", compromissos[i].data.dia, compromissos[i].data.mes, compromissos[i].data.ano);
-            printf("Horario: %02i:%02i\n", compromissos[i].horario.hora, compromissos[i].horario.min);
-            printf("Descricao: %s\n", compromissos[i].descricao);
-        }
-    }
-
-    printf("\n\nDigite qualquer numero para voltar ao menu: ");
-    scanf(" %d", &menu);
 }
 
 int compara_hora_ra(const void *a, const void *b) {
@@ -799,86 +863,24 @@ int compara_hora_ra(const void *a, const void *b) {
     return c1->aluno.ra - c2->aluno.ra;
 }
 
-
-void imprime_compromissos_uma_data(td_compromisso *compromissos, int qtd_compromissos) {
-    td_data data;
-    int menu, count = 0, i, j = 0;
-
-    printf("\nDigite a data (DD/MM/AAAA): ");
-	scanf("%d/%d/%d", &data.dia, &data.mes, &data.ano);
-
-    // Conta quantos compromissos tem na data
-    for (i = 0; i < qtd_compromissos; i++) {
-        if (compromissos[i].data.dia == data.dia &&
-            compromissos[i].data.mes == data.mes &&
-            compromissos[i].data.ano == data.ano) {
-            count++;
-        }
-    }
-
-    if (count == 0) {
-        printf("\nA data informada e invalida ou nao ha compromissos cadastrados para esse dia.\n");
-    } else {
-        td_compromisso *filtrados = malloc(count * sizeof(td_compromisso));
-
-        for (i = 0; i < qtd_compromissos; i++) {
-            if (compromissos[i].data.dia == data.dia &&
-                compromissos[i].data.mes == data.mes &&
-                compromissos[i].data.ano == data.ano) {
-                filtrados[j++] = compromissos[i];
-            }
-        }
-
-        // Ordena por hora e RA
-        qsort(filtrados, count, sizeof(td_compromisso), compara_hora_ra);
-
-        printf("\nCompromissos do dia %02d/%02d/%04d:\n", data.dia, data.mes, data.ano);
-        
-        for (i = 0; i < count; i++) {
-            printf("\nAluno: %s (RA: %d)", filtrados[i].aluno.nome, filtrados[i].aluno.ra);
-            printf("\nHorario: %02i:%02i", filtrados[i].horario.hora, filtrados[i].horario.min);
-            printf("\nDescricao: %s\n", filtrados[i].descricao);
-        }
-
-        free(filtrados); //Libera a memoria
-    }
-
-    printf("\nDigite qualquer numero para voltar ao menu: ");
-    scanf("%d", &menu);
-}
-
 int compara_data_hora_ra(const void *a, const void *b) {
     const td_compromisso *c1 = (const td_compromisso *)a;
     const td_compromisso *c2 = (const td_compromisso *)b;
 
-    // Compara data e hora primeiro
+    //Compara data e hora primeiro
     int comparacao_data_hora = compara_data_hora(c1, c2);
     if (comparacao_data_hora != 0) return comparacao_data_hora;
 
-    // Se data e hora forem iguais, compara RA
+    //Se data e hora forem iguais, compara RA
     return compara_aluno_ra(&(c1->aluno), &(c2->aluno));
 }
 
+//===============Funções de memoria===============
 
-void imprime_compromissos_todas_datas(td_compromisso *compromissos, int qtd_compromissos) {
-    int i, menu;
-    
-    if (qtd_compromissos == 0) {
-        printf("\nNenhum compromisso cadastrado.\n");
-    } else {
-        // Ordenar por data, hora, RA
-        qsort(compromissos, qtd_compromissos, sizeof(td_compromisso), compara_data_hora_ra);
+void* aloca_vetor(int quantidade, size_t tamanho_tipo) {
+    return malloc(quantidade * tamanho_tipo);
+}
 
-        printf("\nCompromissos ordenados por data, hora e RA:\n");
-
-        for (i = 0; i < qtd_compromissos; i++) {
-        	printf("\nAluno: %s (RA: %d)\n", compromissos[i].aluno.nome, compromissos[i].aluno.ra);
-            printf("Data: %02d/%02d/%04d\n", compromissos[i].data.dia, compromissos[i].data.mes, compromissos[i].data.ano);
-            printf("Horario: %02d:%02d\n", compromissos[i].horario.hora, compromissos[i].horario.min);
-            printf("Descrição: %s\n", compromissos[i].descricao);
-        }
-    }
-
-    printf("\n\nDigite qualquer numero para voltar ao menu: ");
-    scanf("%d", &menu);
+void* realoca_vetor(void* vetor, int nova_quantidade, size_t tamanho_tipo) {
+    return realloc(vetor, nova_quantidade * tamanho_tipo);
 }
